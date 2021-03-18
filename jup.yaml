@@ -1,0 +1,18 @@
+proxy:
+  secretToken: "de1aa526560d5b205656c0489a7dc99b985619a6049092d3bf608f8f4e42cb87" 
+singleuser:
+  image:
+    name: jupyter/pyspark-notebook
+    tag: 82d1d0bf0867
+  extraEnv:
+    HADOOP_CONF_DIR: "/home/jovyan/yarn_config"
+  lifecycleHooks:
+    postStart:
+      exec:
+        command:
+            - "sh"
+            - "-c"
+            - >
+              wget https://wilderness1storage.blob.core.windows.net/yarnconfigstorage/yarn_config.tar.gz -O /home/jovyan/tmp.tar.gz;
+              tar xf /home/jovyan/tmp.tar.gz -C /home/jovyan/;
+              rm /home/jovyan/tmp.tar.gz
